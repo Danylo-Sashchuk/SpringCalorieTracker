@@ -1,4 +1,4 @@
-package com.caloriestracker.app.model;
+package com.calorietracker.app.model;
 
 import java.time.LocalDateTime;
 

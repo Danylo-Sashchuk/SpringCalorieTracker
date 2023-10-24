@@ -1,7 +1,7 @@
-package com.caloriestracker.app.util;
+package com.calorietracker.app.util;
 
-import com.caloriestracker.app.model.Meal;
-import com.caloriestracker.app.model.MealTo;
+import com.calorietracker.app.model.Meal;
+import com.calorietracker.app.model.MealTo;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
