@@ -1,4 +1,4 @@
-package com.caloriestracker.app.web;
+package com.calorietracker.app.web;
 
 import org.slf4j.Logger;
 
