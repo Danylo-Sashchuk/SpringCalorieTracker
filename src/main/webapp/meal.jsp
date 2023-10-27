@@ -24,6 +24,8 @@
 </script>
 
 <form method="POST" action='meals' name="frmAddMeal">
+    Meal ID : <input type="text" readonly="readonly" name="mealId"
+                     value="<c:out value="${meal.id}" />"/> <br/>
     Description : <input
         type="text" name="description"
         value="<c:out value="${meal.description}" />"/> <br/>
