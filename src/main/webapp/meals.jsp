@@ -26,11 +26,11 @@
     </tr>
     <c:forEach items="${meals}" var="meal">
         <tr class="${meal.excess ? 'red-row' : 'green-row'}">
-            <td>
-                <c:set var="time" value="${TimeUtil.formattedDateTime(meal.dateTime)}"/> ${time}
-            </td>
+            <td><c:set var="time" value="${TimeUtil.formattedDateTime(meal.dateTime)}"/> ${time}</td>
             <td>${meal.description}</td>
             <td>${meal.calories}</td>
+            <td><a href="meals?action=edit&id=<c:out value="${meal.id}"/>">Update</a></td>
+            <td><a href="meals?action=delete&id=<c:out value="${meal.id}"/>">Delete</a></td>
         </tr>
     </c:forEach>
 </table>
