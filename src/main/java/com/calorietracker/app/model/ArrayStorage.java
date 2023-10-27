@@ -20,28 +20,23 @@ public class ArrayStorage implements Storage {
 
     @Override
     public void add(Meal meal) {
-
+        storage.remove(meal);
+        storage.add(meal);
     }
 
     @Override
     public void delete(int id) {
-        storage.removeIf(meal -> meal.getId() == id);
+        storage.remove(id);
     }
 
     @Override
     public Meal get(int id) {
-        for (Meal meal : storage) {
-            if (meal.getId() == id) {
-                return meal;
-            }
-        }
-        return null;
+        return storage.get(id);
     }
 
     @Override
     public void update(Meal meal) {
-        delete(meal.getId());
-        storage.add(meal);
+
     }
 
     @Override

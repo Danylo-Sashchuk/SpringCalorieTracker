@@ -23,14 +23,12 @@
     });
 </script>
 
-<form method="POST" action='MealServlet' name="frmAddMeal">
-    Meal ID : <input type="text" readonly="readonly" name="mealId"
-                     value="<c:out value="${meal.id}" />"/> <br/>
+<form method="POST" action='meals' name="frmAddMeal">
     Description : <input
         type="text" name="description"
         value="<c:out value="${meal.description}" />"/> <br/>
     Date & Time : <input
-        type="text" name="dob"
+        type="text" name="date"
         value="<c:set var="time" value="${TimeUtil.formattedDateTime(meal.dateTime)}"/>${time}"/> <br/>
     Calories : <input type="text" name="calories"
                       value="<c:out value="${meal.calories}" />"/> <br/> <input

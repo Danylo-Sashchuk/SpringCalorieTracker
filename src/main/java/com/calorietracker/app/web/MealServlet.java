@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
@@ -31,8 +32,8 @@ public class MealServlet extends HttpServlet {
     private static final int DEFAULT_CALORIES_PER_DAY = 2000;
     private static final String INSERT_OR_EDIT = "meal.jsp";
     private static final String MEALS = "meals.jsp";
-    private AtomicInteger id = new AtomicInteger(0);
     private final Storage meals = new ArrayStorage(createMeals());
+    private AtomicInteger id = new AtomicInteger(0);
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException,
@@ -45,18 +46,30 @@ public class MealServlet extends HttpServlet {
         if (action == null) {
             request.setAttribute("meals", getList(meals));
             forward = "meals.jsp";
+            request.getRequestDispatcher(forward).forward(request, response);
         } else if (action.equalsIgnoreCase("delete")) {
             int id = Integer.parseInt(request.getParameter("id"));
             meals.delete(id);
-            request.setAttribute("meals", getList(meals));
-            forward = "meals.jsp";
+            response.sendRedirect("meals");
         } else if (action.equalsIgnoreCase("edit")) {
             forward = "meal.jsp";
             int id = Integer.parseInt(request.getParameter("id"));
             Meal meal = meals.get(id);
             request.setAttribute("meal", meal);
+            request.getRequestDispatcher(forward).forward(request, response);
         }
-        request.getRequestDispatcher(forward).forward(request, response);
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+            IOException {
+        String description = request.getParameter("description");
+        int calories = Integer.parseInt(request.getParameter("calories"));
+        LocalDate date = LocalDate.parse(request.getParameter("date"));
+        Meal meal = new Meal(LocalDateTime.of(date, LocalTime.now()), description, calories);
+        meals.add(meal);
+
+        request.setAttribute("meals", meals);
+        request.getRequestDispatcher("meals.jsp").forward(request, response);
     }
 
     private List<MealTo> getList(Storage storage) {
@@ -66,14 +79,13 @@ public class MealServlet extends HttpServlet {
 
     private List<Meal> createMeals() {
         List<Meal> meals = new ArrayList<>();
-        meals.add(new Meal(LocalDateTime.of(2023, Month.OCTOBER, 26, 10, 55), "Omelet", 150, id.getAndIncrement()));
-        meals.add(new Meal(LocalDateTime.of(2023, Month.OCTOBER, 26, 13, 10), "Sandwich", 700, id.getAndIncrement()));
-        meals.add(new Meal(LocalDateTime.of(2023, Month.OCTOBER, 27, 20, 12), "Pork", 500, id.getAndIncrement()));
-        meals.add(new Meal(LocalDateTime.of(2023, Month.OCTOBER, 27, 18, 30), "French Fries", 300,
-                id.getAndIncrement()));
-        meals.add(new Meal(LocalDateTime.of(2023, Month.OCTOBER, 26, 10, 0), "Fish", 400, id.getAndIncrement()));
-        meals.add(new Meal(LocalDateTime.of(2023, Month.OCTOBER, 26, 13, 0), "Apple", 50, id.getAndIncrement()));
-        meals.add(new Meal(LocalDateTime.of(2023, Month.OCTOBER, 27, 20, 0), "Beer", 300, id.getAndIncrement()));
+        meals.add(new Meal(LocalDateTime.of(2023, Month.OCTOBER, 26, 10, 55), "Omelet", 150));
+        meals.add(new Meal(LocalDateTime.of(2023, Month.OCTOBER, 26, 13, 10), "Sandwich", 700));
+        meals.add(new Meal(LocalDateTime.of(2023, Month.OCTOBER, 27, 20, 12), "Pork", 500));
+        meals.add(new Meal(LocalDateTime.of(2023, Month.OCTOBER, 27, 18, 30), "French Fries", 300));
+        meals.add(new Meal(LocalDateTime.of(2023, Month.OCTOBER, 26, 10, 0), "Fish", 400));
+        meals.add(new Meal(LocalDateTime.of(2023, Month.OCTOBER, 26, 13, 0), "Apple", 50));
+        meals.add(new Meal(LocalDateTime.of(2023, Month.OCTOBER, 27, 20, 0), "Beer", 300));
         return meals;
     }
 }
