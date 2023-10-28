@@ -69,7 +69,7 @@ public class MealServlet extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         Meal meal = new Meal(date, description, calories, id);
 
-        meals.update(meal);
+        meals.add(meal);
 
         request.setAttribute("meals", getList(meals));
         request.getRequestDispatcher("meals.jsp").forward(request, response);
