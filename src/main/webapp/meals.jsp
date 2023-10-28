@@ -24,7 +24,7 @@
         <th>Description</th>
         <th>Calories</th>
     </tr>
-    <c:forEach items="${meals}" var="meal" varStatus="counter">
+    <c:forEach items="${meals}" var="meal">
         <tr class="${meal.excess ? 'red-row' : 'green-row'}">
             <td><c:set var="time" value="${TimeUtil.formattedDateTime(meal.dateTime)}"/> ${time}</td>
             <td>${meal.description}</td>
@@ -34,5 +34,6 @@
         </tr>
     </c:forEach>
 </table>
+<p><a href="meals?action=insert">Add Meal</a></p>
 </body>
 </html>

@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
@@ -55,6 +54,10 @@ public class MealServlet extends HttpServlet {
             Meal meal = meals.get(id);
             request.setAttribute("meal", meal);
             request.getRequestDispatcher(forward).forward(request, response);
+        } else if (action.equalsIgnoreCase("insert")) {
+            forward = "meal.jsp";
+            request.setAttribute("id", id.getAndIncrement());
+            request.getRequestDispatcher(forward).forward(request, response);
         }
     }
 
@@ -62,12 +65,13 @@ public class MealServlet extends HttpServlet {
             IOException {
         String description = request.getParameter("description");
         int calories = Integer.parseInt(request.getParameter("calories"));
-        LocalDate date = LocalDate.parse(request.getParameter("date"));
+        LocalDateTime date = LocalDateTime.parse(request.getParameter("date"));
         int id = Integer.parseInt(request.getParameter("id"));
-        Meal meal = new Meal(LocalDateTime.of(date, LocalTime.now()), description, calories, id);
-        meals.add(meal);
+        Meal meal = new Meal(date, description, calories, id);
 
-        request.setAttribute("meals", meals);
+        meals.update(meal);
+
+        request.setAttribute("meals", getList(meals));
         request.getRequestDispatcher("meals.jsp").forward(request, response);
     }
 

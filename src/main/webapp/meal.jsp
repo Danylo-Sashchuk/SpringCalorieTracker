@@ -17,21 +17,18 @@
     <title>Add new meal</title>
 </head>
 <body>
-<script>
-    $(function () {
-        $('input[name=dob]').datepicker();
-    });
-</script>
+
 
 <form method="POST" action='meals' name="frmAddMeal">
-    Meal ID : <input type="text" readonly="readonly" name="mealId"
-                     value="<c:out value="${meal.id}" />"/> <br/>
+    Meal ID : <input type="text" readonly="readonly" name="id"
+                     value="<c:choose><c:when test="${empty meal.id}">${id}</c:when><c:otherwise><c:out value="${meal.id}" /></c:otherwise></c:choose>"/>
+    <br/>
     Description : <input
         type="text" name="description"
         value="<c:out value="${meal.description}" />"/> <br/>
     Date & Time : <input
-        type="text" name="date"
-        value="<c:set var="time" value="${TimeUtil.formattedDateTime(meal.dateTime)}"/>${time}"/> <br/>
+        type="datetime-local" name="date"
+        value="<c:set var="time" value="${meal.dateTime}"/>${time}"/> <br/>
     Calories : <input type="text" name="calories"
                       value="<c:out value="${meal.calories}" />"/> <br/> <input
         type="submit" value="Submit"/>

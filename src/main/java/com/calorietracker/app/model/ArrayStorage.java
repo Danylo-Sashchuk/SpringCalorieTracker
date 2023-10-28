@@ -20,7 +20,10 @@ public class ArrayStorage implements Storage {
 
     @Override
     public void add(Meal meal) {
-
+        if (get(meal.getId()) != null) {
+            update(meal);
+        }
+        storage.add(meal);
     }
 
     @Override
@@ -40,8 +43,14 @@ public class ArrayStorage implements Storage {
 
     @Override
     public void update(Meal meal) {
-        delete(meal.getId());
-        storage.add(meal);
+        int index = 0;
+        for (int i = 0; i < storage.size(); i++) {
+            if (storage.get(i).getId() == meal.getId()) {
+                index = i;
+                break;
+            }
+        }
+        storage.set(index, meal);
     }
 
     @Override
