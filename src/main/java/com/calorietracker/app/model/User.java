@@ -1,8 +1,8 @@
 package com.calorietracker.app.model;
 
-import java.util.Date;
-import java.util.EnumSet;
-import java.util.Set;
+import org.springframework.util.CollectionUtils;
+
+import java.util.*;
 
 import static com.calorietracker.app.util.MealsUtil.DEFAULT_CALORIES_PER_DAY;
 
@@ -20,18 +20,18 @@ public class User extends AbstractNamedEntity {
 
     private int caloriesPerDay;
 
-    public User(Integer id, String name, String email, String password, Role role, Role... roles) {
-        this(id, name, email, password, DEFAULT_CALORIES_PER_DAY, true, EnumSet.of(role, roles));
+    public User(Integer id, String name, String email, String password, Role... roles) {
+        this(id, name, email, password, DEFAULT_CALORIES_PER_DAY, true, Arrays.asList(roles));
     }
 
     public User(Integer id, String name, String email, String password, int caloriesPerDay, boolean enabled,
-                Set<Role> roles) {
+                Collection<Role> roles) {
         super(id, name);
         this.email = email;
         this.password = password;
         this.caloriesPerDay = caloriesPerDay;
         this.enabled = enabled;
-        this.roles = roles;
+        setRoles(roles);
     }
 
     public String getEmail() {
@@ -68,6 +68,10 @@ public class User extends AbstractNamedEntity {
 
     public Set<Role> getRoles() {
         return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = CollectionUtils.isEmpty(roles) ? EnumSet.noneOf(Role.class) : EnumSet.copyOf(roles);
     }
 
     public String getPassword() {
