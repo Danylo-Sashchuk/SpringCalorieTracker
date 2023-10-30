@@ -1,8 +1,9 @@
 package com.calorietracker.app.web;
 
 import com.calorietracker.app.model.Meal;
-import com.calorietracker.app.repository.InMemoryMealRepository;
+
 import com.calorietracker.app.repository.MealRepository;
+import com.calorietracker.app.repository.inmemory.InMemoryMealRepository;
 import com.calorietracker.app.util.MealsUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

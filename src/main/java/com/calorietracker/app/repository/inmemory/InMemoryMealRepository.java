@@ -1,6 +1,7 @@
-package com.calorietracker.app.repository;
+package com.calorietracker.app.repository.inmemory;
 
 import com.calorietracker.app.model.Meal;
+import com.calorietracker.app.repository.MealRepository;
 import com.calorietracker.app.util.MealsUtil;
 
 import java.util.Collection;
