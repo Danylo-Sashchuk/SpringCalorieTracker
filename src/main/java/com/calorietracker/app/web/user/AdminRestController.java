@@ -1,9 +1,11 @@
 package com.calorietracker.app.web.user;
 
 import com.calorietracker.app.model.User;
+import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
+@Controller
 public class AdminRestController extends AbstractUserController {
 
     @Override

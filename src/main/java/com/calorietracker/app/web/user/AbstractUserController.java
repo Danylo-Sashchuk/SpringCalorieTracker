@@ -3,7 +3,8 @@ package com.calorietracker.app.web.user;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.calorietracker.app.model.User;
-import com.calorietracker.app.repository.UserService;
+import com.calorietracker.app.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import static com.calorietracker.app.util.ValidationUtil.checkNew;
 public abstract class AbstractUserController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
+    @Autowired
     private UserService service;
 
     public List<User> getAll() {
